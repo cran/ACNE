@@ -1,4 +1,5 @@
-6cb7c5999be638374ef81bdcb630ac29 *DESCRIPTION
+722836496afe1487c5d48bfd04cca92e *DESCRIPTION
+aabdc39d537eb1bf30aa855a81ae3cd8 *NAMESPACE
 c3efc9548e0d1aaca022be185460f5ca *R/000.R
 dcb0e44d79e9859ee6006eb8c70b2837 *R/999.NonDocumentedObjects.R
 21b8b72c99260db9a7c30b8aed9da49d *R/999.package.R
@@ -16,11 +17,11 @@ bf3fd5855f3c71fbbf0d0ba7a031be0b *R/NmfPlm.R
 10ba7509ad292be7482fb910d4a3f835 *R/robustHInit.R
 7cfd6eaf119dda956547f83dd0c7eebd *R/robustWInit.R
 940c48fa2df0d5da7d598e2cd34d7efc *R/snpArrayToMatrix.R
-9fe3bff6ce8482c09a16a7397483b9dc *R/zzz.R
+70cf8f17fb7ba11d6e5a1b38e8f5a7bf *R/zzz.R
 7e5e54fb4d497bee67cadcc7a0dba27a *incl/999.missingdocs.txt
 554be533916a959ee3e402ab698528f4 *incl/fitSnpNmfArray.Rex
 5cdcfc189d1c281636aaf471af075f74 *incl/snpArrayToMatrix.Rex
-83aa3b2b6b9b7e59659b62b07f6c67d6 *inst/NEWS
+616a385bf54f9354db872c655325946b *inst/NEWS
 845fc2d26b08291eaa04c5320e9ebad5 *inst/extData/V1.Rbin
 ac2e2b22c156082e3c57f8f7dda8e0de *inst/extData/V2.Rbin
 a0dd946442f3343c01c72e95f1cb2f5e *inst/extData/V3.Rbin
