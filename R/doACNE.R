@@ -1,7 +1,49 @@
-setMethodS3("doACNE", "AffymetrixCelSet", function(csR, ..., fln=FALSE, ram=NULL, verbose=FALSE) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+###########################################################################/**
+# @RdocDefault doACNE
+# @alias doACNE.AffymetrixCelSet
+#
+# @title "(ACNE)"
+#
+# \description{
+#  @get "title" based on [1].
+#  The algorithm is processed in bounded memory, meaning virtually
+#  any number of arrays can be analyzed on also very limited computer
+#  systems.
+# }
+#
+# \usage{
+#   @usage doACNE,AffymetrixCelSet
+#   @usage doACNE,default
+# }
+#
+# \arguments{
+#  \item{csR, dataSet}{An @see "AffymetrixCelSet" (or the name of an
+#   @see "AffymetrixCelSet").}
+#  \item{fln}{If @TRUE, CRMAv2-style PCR fragment-length normalization
+#   is performed, otherwise not.}
+#  \item{drop}{If @TRUE, the RMA summaries are returned, otherwise
+#   a named @list of all intermediate and final results.}
+#  \item{verbose}{See @see "Verbose".}
+#  \item{...}{Additional arguments used to set up @see "AffymetrixCelSet"
+#   (when argument \code{dataSet} is specified).}
+# }
+#
+# \value{
+#   Returns a named @list, iff \code{drop == FALSE}, otherwise
+#   a named @list of @see "aroma.core::AromaUnitTotalCnBinarySet"
+#   and @see "aroma.core::AromaUnitFracBCnBinarySet".
+# }
+#
+# \references{
+#  [1] @include "../incl/OrtizM_etal_2010.Rd" \cr
+# }
+#
+# @author "HB"
+#*/###########################################################################
+setMethodS3("doACNE", "AffymetrixCelSet", function(csR, fln=FALSE, drop=TRUE, verbose=FALSE, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'csR':
   className <- "AffymetrixCelSet";
   if (!inherits(csR, className)) {
@@ -11,16 +53,23 @@ setMethodS3("doACNE", "AffymetrixCelSet", function(csR, ..., fln=FALSE, ram=NULL
   # Argument 'fln':
   fln <- Arguments$getVerbose(fln);
 
+  # Argument 'drop':
+  drop <- Arguments$getLogical(drop);
+
   # Argument 'verbose':
   verbose <- Arguments$getVerbose(verbose);
 
 
   verbose && enter(verbose, "ACNE");
-  verbose && cat(verbose, "Arguments:");
-  verbose && cat(verbose, "ram: ", ram);
 
   verbose && cat(verbose, "Data set");
   verbose && print(verbose, csR);
+
+  # List of objects to be returned
+  res <- list();
+  if (!drop) {
+    res <- c(res, list(csR=csR));
+  }
 
   verbose && enter(verbose, "ACNE/CRMAv2/Allelic crosstalk calibration");
   acc <- AllelicCrosstalkCalibration(csR, model="CRMAv2");
@@ -29,10 +78,12 @@ setMethodS3("doACNE", "AffymetrixCelSet", function(csR, ..., fln=FALSE, ram=NULL
   verbose && print(verbose, csC);
   verbose && exit(verbose);
 
+  if (!drop) {
+    res <- c(res, list(acc=acc, csC=csC));
+  }
+
   # Clean up
-  rm(csR, acc);
-  gc <- gc();
-  verbose && print(verbose, gc);
+  csR <- acc <- NULL;
 
   verbose && enter(verbose, "ACNE/CRMAv2/Base position normalization");
   bpn <- BasePositionNormalization(csC, target="zero");
@@ -41,31 +92,38 @@ setMethodS3("doACNE", "AffymetrixCelSet", function(csR, ..., fln=FALSE, ram=NULL
   verbose && print(verbose, csN);
   verbose && exit(verbose);
 
+  if (!drop) {
+    res <- c(res, list(bpn=bpn, csN=csN));
+  }
+
   # Clean up
-  rm(csC, bpn);
-  gc <- gc();
-  verbose && print(verbose, gc);
-  
+  csC <- bpn <- NULL;
+
   verbose && enter(verbose, "ACNE/Probe summarization");
   plm <- NmfSnpPlm(csN, mergeStrands=TRUE);
   verbose && print(verbose, plm);
-  if (length(findUnitsTodo(plm)) > 0) {
+  if (length(findUnitsTodo(plm)) > 0L) {
     # Fit CN probes quickly (~5-10s/array + some overhead)
     units <- fitCnProbes(plm, verbose=verbose);
     verbose && str(verbose, units);
     # Fit remaining units, i.e. SNPs (~5-10min/array)
-    units <- fit(plm, ram=ram, verbose=verbose);
+    units <- fit(plm, verbose=verbose);
     verbose && str(verbose, units);
-    rm(units);
-  }  
-  verbose && print(verbose, gc);
+    units <- NULL;
+  }
+  # Clean up
+  csN <- NULL;
   ces <- getChipEffectSet(plm);
   verbose && print(verbose, ces);
   verbose && exit(verbose);
 
+  if (!drop) {
+    res <- c(res, list(plm=plm));
+  }
+
   # Clean up
-  rm(plm, csN);
-  gc <- gc();
+  plm <- NULL;
+
 
   # PCR fragment-length normalization?
   if (fln) {
@@ -75,30 +133,45 @@ setMethodS3("doACNE", "AffymetrixCelSet", function(csR, ..., fln=FALSE, ram=NULL
     cesN <- process(fln, verbose=verbose);
     verbose && print(verbose, cesN);
     verbose && exit(verbose);
-  
+
+    if (!drop) {
+      res <- c(res, list(fln=fln, cesN=cesN));
+    }
+
     # Clean up
-    rm(fln, ces);
-    gc <- gc();
+    fln <- ces <- NULL;
   } else {
     cesN <- ces;
+
+    if (!drop) {
+      res <- c(res, list(cesN=cesN));
+    }
   }
-  
+
   verbose && enter(verbose, "ACNE/Export to technology-independent data files");
-  res <- exportTotalAndFracB(cesN, verbose=verbose);
-  verbose && print(verbose, res);
+  dsNList <- exportTotalAndFracB(cesN, verbose=verbose);
+  verbose && print(verbose, dsNList);
   verbose && exit(verbose);
 
   # Clean up
-  rm(cesN);
-  gc <- gc();
+  cesN <- NULL;
+
+  if (!drop) {
+    res <- c(res, list(dsNList=dsNList));
+  }
+
+  # Return only the final results?
+  if (drop) {
+    res <- dsNList;
+  }
 
   verbose && exit(verbose);
 
   res;
-}) # doCRMAv2()
+}) # doACNE()
 
 
-setMethodS3("doACNE", "character", function(dataSet, ..., verbose=FALSE) {
+setMethodS3("doACNE", "default", function(dataSet, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -120,17 +193,19 @@ setMethodS3("doACNE", "character", function(dataSet, ..., verbose=FALSE) {
   res <- doACNE(csR, ..., verbose=verbose);
 
   # Clean up
-  rm(csR);
-  gc <- gc();
+  csR <- NULL;
 
   verbose && exit(verbose);
 
   res;
-})
+}) # doACNE()
 
 
 ############################################################################
 # HISTORY:
-# 2010-05-17
-# o Created from doCRMAv2() in aroma.affymetrix.
+# 2013-10-17
+# o CLEANUP: Removed all explicit calls to gc().
+# o CLEANUP: Dropped argument 'ram' to fit() of doACNE().
+# o Turned doACNE() for character into a default method.
+# o Created from doCRMAv1() in aroma.affymetrix.
 ############################################################################

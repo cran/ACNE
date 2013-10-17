@@ -22,9 +22,6 @@
 \alias{getProbeAffinityFile.NmfPlm}
 \alias{plotFreqB}
 \alias{miqr.solve}
-\alias{doACNE}
-\alias{doACNE.AffymetrixCelSet}
-\alias{doACNE.character}
 \alias{cat}
 
 \description{
@@ -39,7 +36,7 @@
   The rest are deprecated methods.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 \keyword{documentation}
