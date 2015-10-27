@@ -1,6 +1,6 @@
-e75a182233d886c7e74fbbfddfd36668 *DESCRIPTION
-e39f4eef7276745a04cc1a1134df9d20 *NAMESPACE
-12845c83dbe59d9faf6d8a538819a3c9 *NEWS
+47d7b04b8b386c45b743f1d353e4413c *DESCRIPTION
+6fbf5fe5453bfb41ba443716ea8f8074 *NAMESPACE
+cbabf61f4209324030f551b71c19ae42 *NEWS
 774f26b1d2e7f0a31811c20e869172e1 *R/000.R
 dcb0e44d79e9859ee6006eb8c70b2837 *R/999.NonDocumentedObjects.R
 c23d316ca53bd0301de5258b4aaa5310 *R/999.package.R
@@ -32,7 +32,7 @@ f79989bac3afdb33ad4426c56331f5d8 *inst/extData/V5.Rbin
 74c07aa9483ae90f2c33a9e721900260 *inst/testScripts/system/chipTypes/Mapping50K_Hind240,Xba240/test20090122,50K,NMF,freqB.R
 3d422bf74c9f00131dc956b1fc4126b7 *inst/testScripts/system/chipTypes/Mapping50K_Hind240,Xba240/test20090128,50K,NMF.R
 5ac03079e51d67fe703afd215c4a1e43 *inst/testScripts/system/chipTypes/Mapping50K_Hind240,Xba240/test20100517,50K,doACNE.R
-e8cfb498d3137245a88cfb18264c21e6 *man/ACNE-package.Rd
+8f9700fa7be52c98a655e73f0adba7a4 *man/ACNE-package.Rd
 21816495fb8563abbec0acc6c84467e9 *man/NmfPlm.Rd
 7bb87a8c3f7dc4d0d32fc09b9ccf9c9d *man/NmfSnpPlm.Rd
 aa51dd9bb25cc3a4acaa7d88024e4fbb *man/Non-documented_objects.Rd
