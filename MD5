@@ -1,6 +1,6 @@
-bb9326d9f5beb4330d24e84552579f85 *DESCRIPTION
+f0b055efd9741925d7e06f502c211681 *DESCRIPTION
 77c52c8f9af20808609277e4211c0a5b *NAMESPACE
-9fa9ddcaf1680a55fd1f7ea2577a2e90 *NEWS.md
+6e317e08cd83b4b2d4fe65d7bde0114c *NEWS.md
 210bce7f927d302c7b0fe0db91f3c908 *R/000.R
 dcb0e44d79e9859ee6006eb8c70b2837 *R/999.NonDocumentedObjects.R
 c23d316ca53bd0301de5258b4aaa5310 *R/999.package.R
@@ -8,7 +8,7 @@ c23d316ca53bd0301de5258b4aaa5310 *R/999.package.R
 6f2c95dbd8ee7a0cd7ad569d848e4e49 *R/NmfSnpPlm.R
 3be7378adb85e032dc156f45783a107f *R/SnpNmfFit.plot.R
 83b494bb6b1c90ce50bcc46e8819a8b9 *R/WHInit.R
-0c4dcdb0fa7b84559b3d9d55e1c72ac3 *R/doACNE.R
+8f06a978d2ee5bd945c3fbfbd2a9b41a *R/doACNE.R
 43ec0793bbd1bc290d0d0771581b2e36 *R/fitSnpNmf.R
 efadd9cb8aada55e4c64afa764214643 *R/fitSnpNmfArray.R
 19b85a3b5b5e27ba5baeab3f4ca0bddb *R/miqr.solve.R
@@ -39,7 +39,7 @@ f79989bac3afdb33ad4426c56331f5d8 *inst/extData/V5.Rbin
 6540822e523bf41d4562d2fdf4a25ddd *man/NmfSnpPlm.Rd
 aa51dd9bb25cc3a4acaa7d88024e4fbb *man/Non-documented_objects.Rd
 5dc421f3c8a7c2a5cf52355da6f445e8 *man/WHInit.Rd
-1a43c14c388ecb02ddebc14ec9eb3738 *man/doACNE.Rd
+52fc45208170c2d1c02f419238de5735 *man/doACNE.Rd
 37868e70fe703212acc700ffd4e0f753 *man/fitSnpNmf.Rd
 270d0d2652a5c6147ce7ae79d93547a1 *man/fitSnpNmfArray.Rd
 97dba4132c2a6c12d0c1943f6a9b0fb2 *man/plot.SnpNmfFit.Rd
